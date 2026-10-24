@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
 
 def fix_days_employed(df: pd.DataFrame):
     # work on copy so that we dont change original data
@@ -28,5 +32,23 @@ def get_splits(path = "data/application_train.csv"):
     )
 
     return X_train, X_val, X_test, y_train, y_val, y_test
+
+
+# build preprocessor for handling missing values, one hot encoding of text and num columns
+def build_preprocessor(X: pd.DataFrame):
+    num_cols = X.select_dtypes(exclude = ["object", "string"]).columns.to_list()
+    text_cols = X.select_dtypes(include = ["object", "string"]).columns.to_list()
+
+    # creating required pipelines for num/text columns
+    # add_indicator creates a column that indicates whether the row had a missing value or not for a given column
+
+    num_pipe = SimpleImputer(strategy = "median", add_indicator = True)
+
+    text_pipe = Pipeline([("fill", SimpleImputer(strategy = 'constant', fill_value = "missing")),
+                          ("one-hot-encode", OneHotEncoder(handle_unknown="ignore"))])
+
+    return ColumnTransformer([("num", num_pipe, num_cols),
+                              ("text", text_pipe, text_cols)])
+
 
 
