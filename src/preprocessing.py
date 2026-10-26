@@ -5,6 +5,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
 
 def fix_days_employed(df: pd.DataFrame):
     # work on copy so that we dont change original data
@@ -42,7 +43,8 @@ def build_preprocessor(X: pd.DataFrame):
     # creating required pipelines for num/text columns
     # add_indicator creates a column that indicates whether the row had a missing value or not for a given column
 
-    num_pipe = SimpleImputer(strategy = "median", add_indicator = True)
+    num_pipe = Pipeline([("impute", SimpleImputer(strategy = "median", add_indicator = True)),
+                          ("scale", StandardScaler())])
 
     text_pipe = Pipeline([("fill", SimpleImputer(strategy = 'constant', fill_value = "missing")),
                           ("one-hot-encode", OneHotEncoder(handle_unknown="ignore"))])
