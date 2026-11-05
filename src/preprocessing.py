@@ -24,6 +24,7 @@ def get_splits(path = "data/application_train.csv"):
     X = df.drop(columns = ["TARGET", "SK_ID_CURR"])
     y = df["TARGET"]
 
+    # train size = 70%, test size = 15%, val size = 15%
     X_train, X_temp, y_train, y_temp = train_test_split(
         X, y, test_size = 0.3, stratify = y, random_state=40
     )
@@ -49,8 +50,10 @@ def build_preprocessor(X: pd.DataFrame):
     text_pipe = Pipeline([("fill", SimpleImputer(strategy = 'constant', fill_value = "missing")),
                           ("one-hot-encode", OneHotEncoder(handle_unknown="ignore"))])
 
-    return ColumnTransformer([("num", num_pipe, num_cols),
-                              ("text", text_pipe, text_cols)])
+    res = ColumnTransformer([("num", num_pipe, num_cols),
+                             ("text", text_pipe, text_cols)])
+    
+    return res
 
 
 

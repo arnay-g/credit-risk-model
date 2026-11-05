@@ -19,7 +19,7 @@ model = Pipeline([("prep", preprocessor),
 model.fit(X_train, y_train)
 
 # predict_proba return a numpy 2D array in which the first column is of class 0 and second column is of class 1
-probability = model.predict_proba(X_val)[:, 1]
-
-print("ROC-AUC:", roc_auc_score(y_val, probability))
-print("PR-AUC: ", average_precision_score(y_val, probability))
+for name, X, y in [("train", X_train, y_train), ("val", X_val, y_val)]:
+    proba = model.predict_proba(X)[:, 1]
+    print(name, "ROC-AUC:", roc_auc_score(y, proba))
+    print(name, "PR-AUC: ", average_precision_score(y, proba))
