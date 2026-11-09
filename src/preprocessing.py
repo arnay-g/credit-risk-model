@@ -48,7 +48,7 @@ def build_preprocessor(X: pd.DataFrame):
                           ("scale", StandardScaler())])
 
     text_pipe = Pipeline([("fill", SimpleImputer(strategy = 'constant', fill_value = "missing")),
-                          ("one-hot-encode", OneHotEncoder(handle_unknown="ignore"))])
+                          ("one-hot-encode", OneHotEncoder(handle_unknown="ignore", sparse_output = False))])
 
     res = ColumnTransformer([("num", num_pipe, num_cols),
                              ("text", text_pipe, text_cols)])
