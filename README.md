@@ -29,25 +29,22 @@ Random-guesser baselines: ROC-AUC 0.5, PR-AUC 0.081 (the default rate).
 
 ---
 
+
 ## Project structure
 
-credit-risk-model/
-├── data/ # Raw CSV (not in repo)
-├── reports/figures/ # Saved plots
-├── src/
-│ ├── eda.py # Day 1 exploration
-│ ├── preprocessing.py # Cleaning, split, pipeline
-│ ├── train_baseline.py # Logistic regression
-│ ├── train_lgbm.py # LightGBM
-│ ├── train_rf.py # Random forest
-│ ├── cross_validate.py # 5-fold CV
-│ ├── threshold_check.py # Cost-based threshold tuning
-│ ├── explain.py # SHAP feature importance
-│ ├── error_analysis.py # FN vs TP comparison
-│ └── evaluation_test.py # Single test-set evaluation
-├── requirements.txt
-└── README.md
-
+- `src/eda.py` — Day 1 exploration
+- `src/preprocessing.py` — Cleaning, split, pipeline
+- `src/train_baseline.py` — Logistic regression
+- `src/train_gbm.py` — LightGBM
+- `src/train_rf.py` — Random forest
+- `src/cross_validate.py` — 5-fold CV
+- `src/threshold.py` — Cost-based threshold tuning
+- `src/explain.py` — SHAP feature importance
+- `src/error_analysis.py` — FN vs TP comparison
+- `src/evaluation_test.py` — Single test-set evaluation
+- `src/exploration/` — Scratch scripts from EDA
+- `reports/figures/` — Saved plots
+- `data/` — Raw CSV (not in repo)
 
 ---
 
